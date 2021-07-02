@@ -1,0 +1,23 @@
+@import "./normalize.scss";
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
+
+$mainFont: "PT Sans", sans-serif;
+$colorRed: rgb(214, 35, 35);
+$colorBlack: rgb(61, 61, 61);
+
+.slick-slider.slick-arrow{
+  .slick-prev{
+    left: 0 !important;
+  }
+  .slick-next{
+    right: 0;
+  }
+}
+body {
+  font-family: $mainFont;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}

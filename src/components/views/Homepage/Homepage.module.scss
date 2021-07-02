@@ -1,0 +1,12 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  button.slick-arrow{
+    .slick-prev{
+      left: 0 !important;
+    }
+    .slick-next{
+      right: 0;
+    }
+  }
+}
