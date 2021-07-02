@@ -4,7 +4,7 @@ import styles from './NavButton.module.scss';
 import { NavLink } from 'react-router-dom';
 
 const Component = ({ name, link }) => (
-  <NavLink to={link} className={styles.root} activeClassName={styles.active}>
+  <NavLink exact to={link} className={styles.root} activeClassName={styles.active}>
     {name}
   </NavLink>
 );
