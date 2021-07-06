@@ -6,5 +6,8 @@ export const initialState = {
       active: false,
       error: false,
     },
+  },
+  modals: {
+    loadingModal: false
   }
 }

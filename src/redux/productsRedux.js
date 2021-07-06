@@ -4,6 +4,7 @@ import Axios from 'axios';
 /* selectors */
 export const getAll = ({ products }) => products.data;
 export const getOneProduct = ({ products }) => products.oneProduct;
+export const getLoading = ({ products }) => products.loading;
 
 /* action name creator */
 const reducerName = 'products';
@@ -69,7 +70,7 @@ export const reducer = (statePart = [], action = {}) => {
     }
     case FETCH_ONE_PRODUCT_SUCCEED: {
       return {
-        data: [],
+        data: [...statePart.data],
         oneProduct: action.payload,
         loading: {
           active: false,

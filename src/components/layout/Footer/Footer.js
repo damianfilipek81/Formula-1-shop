@@ -3,7 +3,7 @@ import styles from './Footer.module.scss';
 
 const Component = () => (
   <div className={styles.root}>
-    © 2023 by GOOD TO EAT. Proudly created by Damian Filipek
+    Proudly created by Damian Filipek © 2021
   </div>
 );
 
