@@ -1,35 +1,56 @@
 import { API_URL } from '../config';
-
 import Axios from 'axios';
 
 /* selectors */
 export const getAll = ({ products }) => products.data;
+export const getOneProduct = ({ products }) => products.oneProduct;
+
 /* action name creator */
 const reducerName = 'products';
 const createActionName = name => `app/${reducerName}/${name}`;
+
 /* action types */
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_SUCCEED = createActionName('FETCH_SUCCEED');
+const FETCH_ONE_PRODUCT_SUCCEED = createActionName('FETCH_ONE_PRODUCT_SUCCEED');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchSucceed = payload => ({ payload, type: FETCH_SUCCEED });
+export const fetchOneProductSucceed = payload => ({ payload, type: FETCH_ONE_PRODUCT_SUCCEED });
 
 /* thunk creators */
 export const fetchProducts = () => {
   return (dispatch, getState) => {
-    dispatch(fetchStarted());
+    if (getState().products.data.length === 0) {
+      dispatch(fetchStarted());
 
+      Axios
+        .get(`${API_URL}/products`)
+        .then(res => {
+          dispatch(fetchSucceed(res.data));
+        })
+        .catch(err => {
+          dispatch(fetchError(err.message || true));
+        });
+    }
+  };
+};
+
+export const fetchOneProduct = (id) => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
     Axios
-      .get(`${API_URL}/products`)
+      .get(`${API_URL}/products/${id}`)
       .then(res => {
-        dispatch(fetchSucceed(res.data));
+        dispatch(fetchOneProductSucceed(res.data));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
+
   };
 };
 
@@ -39,6 +60,17 @@ export const reducer = (statePart = [], action = {}) => {
     case FETCH_SUCCEED: {
       return {
         data: [...action.payload],
+        oneProduct: {},
+        loading: {
+          active: false,
+          error: false,
+        },
+      };
+    }
+    case FETCH_ONE_PRODUCT_SUCCEED: {
+      return {
+        data: [],
+        oneProduct: action.payload,
         loading: {
           active: false,
           error: false,

@@ -3,7 +3,7 @@ import styles from './RecommendationBox.module.scss';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Component = ({ image, price, name }) => {
+const Component = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
   const [isTimer, setTimer] = useState(false);
 
@@ -17,6 +17,7 @@ const Component = ({ image, price, name }) => {
     setTimer(true);
   };
 
+  const { image, name, price, _id } = data;
   return (
     <div className={styles.root}
       onMouseEnter={() => SetOnMouseEnter()}
@@ -32,7 +33,7 @@ const Component = ({ image, price, name }) => {
             <h5>From {price}$</h5>
           </div> :
           <div className={styles.textWrapper}>
-            <div><Link to='/details'>View Details</Link></div>
+            <div><Link to={`/product/${_id}`}>View Details</Link></div>
           </div>
       }
     </div>
@@ -40,9 +41,7 @@ const Component = ({ image, price, name }) => {
 };
 
 Component.propTypes = {
-  image: PropTypes.string,
-  price: PropTypes.number,
-  name: PropTypes.string,
+  data: PropTypes.object,
 };
 
 export {

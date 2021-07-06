@@ -53,7 +53,7 @@ const Component = ({ products, fetchProducts }) => {
           <h1>Our recommendations</h1>
           <div className={styles.boxesWrapper}>
             {products.map(data =>
-              <RecommendationBox key={data._id} {...data} />
+              <RecommendationBox key={data._id} data={data} />
             )}
           </div>
         </div>
