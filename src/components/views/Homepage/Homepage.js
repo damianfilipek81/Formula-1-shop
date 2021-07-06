@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { getAll } from '../../../redux/productsRedux';
 
 import styles from './Homepage.module.scss';
 import { RecommendationBox } from '../../features/RecommendationBox/RecommendationBox';
 
-const Component = ({ className, children }) => {
+const Component = ({ products }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -18,7 +18,7 @@ const Component = ({ className, children }) => {
     slidesToScroll: 1,
     autoplay: true,
   };
-
+  
   return (
     <div className={styles.root}>
       <div className={styles.sliderWrapper}>
@@ -51,22 +51,20 @@ const Component = ({ className, children }) => {
   );
 };
 Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  products: PropTypes.array,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  products: getAll(state),
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
-  Component as Homepage,
-  // Container as Homepage,
+  Container as Homepage,
   Component as HomepageComponent,
 };

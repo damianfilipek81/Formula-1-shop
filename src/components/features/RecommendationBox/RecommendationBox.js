@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './RecommendationBox.module.scss';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Component = () => {
   const [isShown, setIsShown] = useState(false);
@@ -37,6 +38,11 @@ const Component = () => {
     </div>
   );
 };
+
+Component.propTypes = {
+  
+};
+
 export {
   Component as RecommendationBox,
   Component as RecommendationBoxComponent,
