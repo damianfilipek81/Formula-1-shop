@@ -1,8 +1,6 @@
 export const initialState = {
   products: {
-    data: [
-      {asdasd: 'asdasd'}
-    ],
+    data: [],
     loading: {
       active: false,
       error: false,

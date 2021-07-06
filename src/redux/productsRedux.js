@@ -1,5 +1,4 @@
-/* eslint-disable linebreak-style */
-// import { USER_URL } from '../config';
+import { API_URL } from '../config';
 
 import Axios from 'axios';
 
@@ -11,38 +10,39 @@ const createActionName = name => `app/${reducerName}/${name}`;
 /* action types */
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
+const FETCH_SUCCEED = createActionName('FETCH_SUCCEED');
 
-const CHANGE_USER = createActionName('CHANGE_USER');
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
-
-export const changeUser = payload => ({ payload, type: CHANGE_USER });
+export const fetchSucceed = payload => ({ payload, type: FETCH_SUCCEED });
 
 /* thunk creators */
-// export const fetchUser = () => {
-//   return (dispatch, getState) => {
-//     dispatch(fetchStarted());
+export const fetchProducts = () => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
 
-//     Axios
-//       .get(`${USER_URL}/logged`)
-//       .then(res => {
-//         dispatch(changeUser(res.data));
-//       })
-//       .catch(err => {
-//         dispatch(fetchError(err.message || true));
-//       });
-//   };
-// };
+    Axios
+      .get(`${API_URL}/products`)
+      .then(res => {
+        dispatch(fetchSucceed(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
-    case CHANGE_USER: {
+    case FETCH_SUCCEED: {
       return {
-        logged: action.payload.logged,
-        email: action.payload.email,
-        name: action.payload.name,
-        id: action.payload.id,
+        data: [...action.payload],
+        loading: {
+          active: false,
+          error: false,
+        },
       };
     }
     case FETCH_START: {

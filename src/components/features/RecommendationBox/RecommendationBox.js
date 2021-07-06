@@ -3,13 +3,13 @@ import styles from './RecommendationBox.module.scss';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Component = () => {
+const Component = ({ image, price, name }) => {
   const [isShown, setIsShown] = useState(false);
   const [isTimer, setTimer] = useState(false);
-  
+
   const SetOnMouseLeave = () => {
     setIsShown(false);
-    setTimeout(() => {setTimer(false)}, 700);
+    setTimeout(() => { setTimer(false) }, 700);
   };
 
   const SetOnMouseEnter = () => {
@@ -17,19 +17,19 @@ const Component = () => {
     setTimer(true);
   };
 
-    return (
+  return (
     <div className={styles.root}
       onMouseEnter={() => SetOnMouseEnter()}
       onMouseLeave={() => SetOnMouseLeave()}
     >
       <div className={styles.imageWrapper}>
-        <img alt='' src='https://cdn.shopify.com/s/files/1/1451/0982/products/324901019100_PP_1_FORMULA1_A_011_1024x1024-compressed.jpg?v=1594232128'></img>
+        <img alt='' src={image}></img>
       </div>
       {
         isShown === false && isTimer === false ?
           <div className={styles.textWrapper}>
-            <h3>Mugs</h3>
-            <h5>From 5$</h5>
+            <h3>{name}</h3>
+            <h5>From {price}$</h5>
           </div> :
           <div className={styles.textWrapper}>
             <div><Link to='/details'>View Details</Link></div>
@@ -40,7 +40,9 @@ const Component = () => {
 };
 
 Component.propTypes = {
-  
+  image: PropTypes.string,
+  price: PropTypes.number,
+  name: PropTypes.string,
 };
 
 export {

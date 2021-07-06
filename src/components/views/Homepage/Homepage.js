@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
+import styles from './Homepage.module.scss';
 
 import { connect } from 'react-redux';
-import { getAll } from '../../../redux/productsRedux';
+import { getAll, fetchProducts } from '../../../redux/productsRedux';
 
-import styles from './Homepage.module.scss';
 import { RecommendationBox } from '../../features/RecommendationBox/RecommendationBox';
+import { Container as WidthContainer } from '@material-ui/core';
 
-const Component = ({ products }) => {
+const Component = ({ products, fetchProducts }) => {
+  useEffect(() => {
+    fetchProducts()
+  }, []);
+
   const settings = {
     dots: false,
     infinite: true,
@@ -18,7 +23,7 @@ const Component = ({ products }) => {
     slidesToScroll: 1,
     autoplay: true,
   };
-  
+
   return (
     <div className={styles.root}>
       <div className={styles.sliderWrapper}>
@@ -43,26 +48,33 @@ const Component = ({ products }) => {
           </div>
         </div>
       </div>
-      <div className={styles.recommendationsWrapper}>
-        <h1>Our recommendations</h1>
-        <RecommendationBox />
-      </div>
+      <WidthContainer>
+        <div className={styles.recommendationsWrapper}>
+          <h1>Our recommendations</h1>
+          <div className={styles.boxesWrapper}>
+            {products.map(data =>
+              <RecommendationBox key={data._id} {...data} />
+            )}
+          </div>
+        </div>
+      </WidthContainer>
     </div>
   );
 };
 Component.propTypes = {
   products: PropTypes.array,
+  fetchProducts: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   products: getAll(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  fetchProducts: () => dispatch(fetchProducts()),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   Container as Homepage,

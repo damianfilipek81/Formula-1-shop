@@ -3,6 +3,8 @@
 .root {
   width: 400px;
   height: 600px;
+  flex: 1;
+  padding: 0 10px;
 
   &:hover .textWrapper {
     background: $colorGrey;
@@ -23,11 +25,16 @@
   .textWrapper {
     height: 100px;
     transition: all 1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     h3,
     h5 {
       text-align: center;
       margin: 0;
+      padding: 5px 0;
     }
 
     div {
