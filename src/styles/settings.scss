@@ -25,3 +25,7 @@ body {
     color: inherit;
   }
 }
+
+.MuiDrawer-modal{
+  z-index: 9999999999 !important;
+}
