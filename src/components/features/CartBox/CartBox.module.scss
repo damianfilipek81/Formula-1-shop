@@ -1,0 +1,31 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  .leftWrapper .imageWrapper{
+    width: 130px;
+    height: 130px;
+
+    img{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .rightWrapper{
+    h4{
+      margin: 0;
+      font-weight: 100;
+    }
+
+    h4:nth-of-type(2){
+      margin-top: 10px;
+      font-weight: bolder;
+    }
+  }
+}

@@ -10,5 +10,22 @@
   .container {
     display: flex;
     justify-content: center;
+
+    .btn{
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      font-weight: bold;
+      margin: 15px;
+
+      &:hover{
+        color: $colorGrey;
+      }
+
+      svg{
+        font-size: 30px;
+        margin-right: 5px;
+      }
+    }
   }
 }

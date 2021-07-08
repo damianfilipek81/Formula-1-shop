@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchOneProduct, getOneProduct } from '../../../redux/productsRedux';
+import { addToCart, getCartData } from '../../../redux/cartRedux';
 import styles from './Product.module.scss';
 
 import { Container as WidthContainer } from '@material-ui/core';
@@ -11,8 +12,9 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import Drawer from '@material-ui/core/Drawer';
+import { CartBox } from '../../features/CartBox/CartBox';
 
-const Component = ({ product, fetchOneProduct }) => {
+const Component = ({ product, fetchOneProduct, cartData, addToCart }) => {
   useEffect(() => {
     fetchOneProduct();
   }, [fetchOneProduct]);
@@ -21,6 +23,7 @@ const Component = ({ product, fetchOneProduct }) => {
   const [productDropdown, setProductDropdown] = React.useState(false);
   const [policyDropdown, setPolicyDropdown] = React.useState(false);
   const [cart, setCart] = React.useState(false);
+  const [quantity, setQuantity] = React.useState(1);
 
   const handleProductDropdownClick = () => {
     setProductDropdown(!productDropdown);
@@ -30,6 +33,17 @@ const Component = ({ product, fetchOneProduct }) => {
     setPolicyDropdown(!policyDropdown);
   };
 
+  const handleAddToCart = () => {
+    const output = {
+      image,
+      price,
+      name,
+      quantity,
+    };
+
+    setCart(true);
+    addToCart(output);
+  }
   return (
     <div>
       <WidthContainer>
@@ -49,7 +63,8 @@ const Component = ({ product, fetchOneProduct }) => {
             <TextField
               label="Quantity"
               type="number"
-              defaultValue='1'
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
               inputProps={{
                 min: 1
               }}
@@ -58,7 +73,7 @@ const Component = ({ product, fetchOneProduct }) => {
               }}
               className={styles.quantity}
             />
-            <Button className={styles.btn} onClick={() => setCart(true)}>Add to Cart</Button>
+            <Button className={styles.btn} onClick={() => handleAddToCart()}>Add to Cart</Button>
             <Button className={styles.btn}>Buy Now</Button>
             <div onClick={handleProductDropdownClick} className={styles.dropdownBtn}>
               <h4>PRODUCT INFO</h4>
@@ -77,8 +92,13 @@ const Component = ({ product, fetchOneProduct }) => {
           </div>
         </div>
       </WidthContainer>
-      <Drawer anchor='right' open={cart} onClose={() => setCart(false)}>
-        asdasd
+      <Drawer anchor='right' open={cart} onClose={() => setCart(false)} className={styles.cart}>
+        <div className={styles.cartHeader}>
+          <span onClick={() => setCart(false)}>{'>'}</span>
+          <h2>Cart</h2>
+        </div>
+        {cartData.map((data, index) =>
+          <CartBox key={index} data={data} />)}
       </Drawer>
     </div>
   );
@@ -86,14 +106,18 @@ const Component = ({ product, fetchOneProduct }) => {
 Component.propTypes = {
   fetchOneProduct: PropTypes.func,
   product: PropTypes.object,
+  cartData: PropTypes.array,
+  addToCart: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   product: getOneProduct(state),
+  cartData: getCartData(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
   fetchOneProduct: () => dispatch(fetchOneProduct(props.match.params.id)),
+  addToCart: arg => dispatch(addToCart(arg))
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
