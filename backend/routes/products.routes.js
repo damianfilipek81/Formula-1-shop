@@ -4,6 +4,7 @@ const Product = require('../models/Product.model');
 const router = express.Router();
 
 router.get('/products', async (req, res) => {
+  console.log(req.session)
   try {
     const result = await Product.find();
     if (!result) res.status(404).json({ post: 'Not found' });

@@ -3,18 +3,39 @@ const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const passport = require('passport');
+const session = require('express-session');
+const passportConfig = require('./config/passport');
 
 const productsRoutes = require('./routes/products.routes');
+const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
 
 const app = express();
 
 /* MIDDLEWARE */
+app.use(session({
+  secret: 'deliciousCookie',
+  resave: true,
+  saveUninitialized: true,
+  // rolling: true,
+  // cookie: {
+  //   httpOnly: true,
+  //   maxAge: 1 * 60 * 60 * 1000
+  // },
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /* API ENDPOINTS */
 app.use('/api', productsRoutes);
+app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {

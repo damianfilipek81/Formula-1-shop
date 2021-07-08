@@ -7,7 +7,5 @@ export const initialState = {
       error: false,
     },
   },
-  modals: {
-    loadingModal: false
-  }
+  cart: [],
 }
