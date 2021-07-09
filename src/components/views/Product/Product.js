@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchOneProduct, getOneProduct } from '../../../redux/productsRedux';
 import { addToCart } from '../../../redux/cartRedux';
-import {  addModal } from '../../../redux/modalRedux';
+import { addModal } from '../../../redux/modalRedux';
 import styles from './Product.module.scss';
+import clsx from 'clsx';
 
 import { Container as WidthContainer } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
@@ -22,6 +23,7 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
   const [productDropdown, setProductDropdown] = React.useState(false);
   const [policyDropdown, setPolicyDropdown] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
+  const [color, setColor] = React.useState('Blue');
 
   const handleProductDropdownClick = () => {
     setProductDropdown(!productDropdown);
@@ -37,11 +39,15 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
       price,
       name,
       quantity,
+      color
     };
 
     addModal();
     addToCart(output);
   }
+
+  const colors = ['Blue', 'Black', 'Red', 'White'];
+
   return (
     <WidthContainer>
       <div className={styles.root}>
@@ -70,6 +76,11 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
             }}
             className={styles.quantity}
           />
+          <div className={styles.colors}>
+            {colors.map(data =>
+              <span className={clsx(styles.color, styles[data], { [styles.checked]: color === data })} key={data} onClick={() => setColor(data)}></span>
+            )}
+          </div>
           <Button className={styles.btn} onClick={() => handleAddToCart()}>Add to Cart</Button>
           <Button className={styles.btn}>Buy Now</Button>
           <div onClick={handleProductDropdownClick} className={styles.dropdownBtn}>
