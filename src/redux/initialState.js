@@ -8,4 +8,5 @@ export const initialState = {
     },
   },
   cart: [],
+  modal: false,
 }

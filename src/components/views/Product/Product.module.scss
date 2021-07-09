@@ -103,25 +103,3 @@
   }
 }
 
-.cart{
-  .cartHeader{
-    color: $colorWhite;
-    background: $colorBlack;
-    width: 400px;
-    position: relative;
-
-    h2{
-      text-align: center;
-    }
-
-    span{
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      left: 20px;
-      transform: translateY(-50%);
-      font-size: 30px;
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    }
-  }
-}

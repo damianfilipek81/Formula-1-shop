@@ -41,12 +41,7 @@ export const addToCart = payload => ({ payload, type: ADD_TO_CART });
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
     case ADD_TO_CART: {
-      return [
-        ...statePart,
-        statePart.length > 0 ? statePart.every(data => {
-          return data.name === action.payload.name ? (data.quantity = (data.quantity + action.payload.quantity)) : null
-        }) : action.payload
-      ];
+      return [...statePart, action.payload]
     }
     case FETCH_START: {
       return {

@@ -4,12 +4,14 @@ import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 
 import styles from './MainLayout.module.scss';
+import { CartModal } from '../../features/CartModal/CartModal';
 
 const Component = ({ children }) => {
   return (
     < div className={styles.root} >
       <Header />
       {children}
+      <CartModal />
       <Footer />
     </div >
 
