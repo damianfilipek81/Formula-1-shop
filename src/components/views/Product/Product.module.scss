@@ -42,6 +42,30 @@
         height: 100%;
       }
     }
+    button:first-of-type {
+      left: 10px;
+      z-index: 999;
+  
+      &:before {
+        content: "<";
+        font-size: 50px;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        font-weight: bold;
+        color: $colorBlack;
+      }
+    }
+  
+    button:nth-of-type(2) {
+      right: 20px;
+  
+      &:before {
+        content: ">";
+        font-size: 50px;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        font-weight: bold;
+        color: $colorBlack;
+      }
+    }
   }
 
   .rightWrapper {

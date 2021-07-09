@@ -12,13 +12,15 @@ import { Container as WidthContainer } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
+import { PUBLIC_URL } from '../../../config';
+import Slider from "react-slick";
 
 const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
   useEffect(() => {
     fetchOneProduct();
   }, [fetchOneProduct]);
 
-  const { image, price, name, images } = product;
+  const { price, name, images } = product;
   const [productDropdown, setProductDropdown] = React.useState(false);
   const [policyDropdown, setPolicyDropdown] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
@@ -34,11 +36,11 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
 
   const handleAddToCart = () => {
     const output = {
-      image,
       price,
       name,
       quantity,
-      color
+      color,
+      image: images[color][0]
     };
 
     addModal();
@@ -47,13 +49,29 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
 
   const colors = ['Blue', 'Black', 'Red', 'White'];
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+  };
+
   return (
     <WidthContainer>
       <div className={styles.root}>
         <div className={styles.link}><Link to='/'>HOME</Link> / <span>{name}</span></div>
         <div className={styles.leftWrapper}>
           <div className={styles.imageWrapper}>
-            <img src={image} alt=''></img>
+            <Slider {...settings} className={styles.slider}>
+              <div className={styles.imageWrapper}>
+                {name && <img src={`${PUBLIC_URL}${images[color][0]}`} alt=''></img>}
+              </div>
+              <div className={styles.imageWrapper}>
+                {name && <img src={`${PUBLIC_URL}${images[color][1]}`} alt=''></img>}
+              </div>
+            </Slider>
           </div>
           <p>
             I'm a product description. I’m a great place to include more information about your product. Buyers like to know what they’re getting before they purchase.
