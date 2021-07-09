@@ -13,13 +13,12 @@ import { Container as WidthContainer } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
-
 const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
   useEffect(() => {
     fetchOneProduct();
   }, [fetchOneProduct]);
 
-  const { image, price, name } = product;
+  const { image, price, name, path, images } = product;
   const [productDropdown, setProductDropdown] = React.useState(false);
   const [policyDropdown, setPolicyDropdown] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
@@ -47,7 +46,8 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
   }
 
   const colors = ['Blue', 'Black', 'Red', 'White'];
-
+  console.log(images)
+  console.log(path)
   return (
     <WidthContainer>
       <div className={styles.root}>
@@ -61,6 +61,7 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
           </p>
         </div>
         <div className={styles.rightWrapper}>
+          {image &&<img src={`${path}${images.tshirtBlueFront}`}></img>}
           <h1>{name}</h1>
           <h3>${price}</h3>
           <TextField
