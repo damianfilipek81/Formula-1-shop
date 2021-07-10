@@ -1,0 +1,22 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  width: 250px;
+  border: 1px solid $colorBlack;
+  margin: 20px;
+
+  .imageWrapper{
+    height: 300px;
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  h4{
+    margin: 5px 0;
+    text-align: center;
+  }
+}

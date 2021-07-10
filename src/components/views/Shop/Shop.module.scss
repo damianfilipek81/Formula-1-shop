@@ -1,0 +1,35 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  padding-top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .banner{
+    width: 600px;
+    height: 150px;
+    border: 3px solid $colorBlack;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-family: $logoFont;
+    color: $colorRed;
+  }
+
+  .subTitle{
+    margin-top: 50px;
+    letter-spacing: 10px;
+    font-weight: 100;
+  }
+
+  .products{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+  }
+}

@@ -20,11 +20,11 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
     fetchOneProduct();
   }, [fetchOneProduct]);
 
-  const { price, name, images } = product;
+  const { price, name, images, customizable, image } = product;
   const [productDropdown, setProductDropdown] = React.useState(false);
   const [policyDropdown, setPolicyDropdown] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
-  const [color, setColor] = React.useState('Blue');
+  const [color, setColor] = React.useState('Black');
 
   const handleProductDropdownClick = () => {
     setProductDropdown(!productDropdown);
@@ -40,14 +40,15 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
       name,
       quantity,
       color,
-      image: images[color][0]
+      image: customizable ? images[color][0] : image,
+      customizable
     };
 
     addModal();
     addToCart(output);
   }
 
-  const colors = ['Blue', 'Black', 'Red', 'White'];
+  const colors = [];
 
   const settings = {
     dots: false,
@@ -58,20 +59,23 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
     autoplay: false,
   };
 
+  for (let i in images) {
+    colors.push(i);
+  };
   return (
     <WidthContainer>
       <div className={styles.root}>
         <div className={styles.link}><Link to='/'>HOME</Link> / <span>{name}</span></div>
         <div className={styles.leftWrapper}>
           <div className={styles.imageWrapper}>
-            <Slider {...settings} className={styles.slider}>
-              <div className={styles.imageWrapper}>
-                {name && <img src={`${PUBLIC_URL}${images[color][0]}`} alt=''></img>}
-              </div>
-              <div className={styles.imageWrapper}>
-                {name && <img src={`${PUBLIC_URL}${images[color][1]}`} alt=''></img>}
-              </div>
-            </Slider>
+            {customizable ? <Slider {...settings} className={styles.slider}>
+              {name && images[color].map(data =>
+                <div className={styles.imageWrapper} key={data}>
+                  <img src={`${PUBLIC_URL}${data}`} alt=''></img>
+                </div>
+              )}
+            </Slider> :
+              <img src={image} alt=''></img>}
           </div>
           <p>
             I'm a product description. I’m a great place to include more information about your product. Buyers like to know what they’re getting before they purchase.
@@ -93,11 +97,11 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
             }}
             className={styles.quantity}
           />
-          <div className={styles.colors}>
+          {customizable && <div className={styles.colors}>
             {colors.map(data =>
               <span className={clsx(styles.color, styles[data], { [styles.checked]: color === data })} key={data} onClick={() => setColor(data)}></span>
             )}
-          </div>
+          </div>}
           <Button className={styles.btn} onClick={() => handleAddToCart()}>Add to Cart</Button>
           <Button className={styles.btn}>Buy Now</Button>
           <div onClick={handleProductDropdownClick} className={styles.dropdownBtn}>
