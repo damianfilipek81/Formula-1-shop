@@ -27,6 +27,17 @@
   .cartMain{
     height: calc(100% - 167px);
     overflow: auto;
+    position: relative;
+
+    .priceWrapper{
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+
+      h3{
+        margin: 10px 0;
+      }
+    }
   }
 
   .cartFooter {

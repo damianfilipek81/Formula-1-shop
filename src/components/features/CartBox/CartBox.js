@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import styles from './CartBox.module.scss';
 import { PUBLIC_URL } from '../../../config';
 import { QuantityButton } from '../../common/QuantityButton/QuantityButton';
+import { connect } from 'react-redux';
+import { removeFromCart } from '../../../redux/cartRedux.js';
 
-const Component = ({ data }) => {
+const Component = ({ data, removeFromCart }) => {
   const { image, price, name, quantity, customizable, id, color } = data;
   const [quantityState, setQuantityState] = useState(quantity);
 
   return (
     <div className={styles.root}>
+      <span className={styles.closebtn} onClick={()=> removeFromCart(id)}>X</span>
       <div className={styles.leftWrapper}>
         <div className={styles.imageWrapper}>
           {customizable ? <img src={`${PUBLIC_URL}${image}`} alt=''></img> : <img src={image} alt=''></img>}
@@ -25,9 +28,15 @@ const Component = ({ data }) => {
 };
 Component.propTypes = {
   data: PropTypes.object,
+  removeFromCart: PropTypes.func,
 };
 
+const mapDispatchToPropst = dispatch => ({
+  removeFromCart: arg => dispatch(removeFromCart(arg))
+});
+
+const Container = connect(null, mapDispatchToPropst)(Component);
 export {
-  Component as CartBox,
+  Container as CartBox,
   Component as CartBoxComponent,
 };
