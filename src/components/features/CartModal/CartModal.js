@@ -13,7 +13,6 @@ const Component = ({ removeModal, modalData, cartData }) => {
   let price = 0;
 
   cartData.map(data => price += (data.price * data.quantity));
-  console.log(price)
   return (
     <Drawer anchor='right' open={modalData} onClose={() => removeModal()} className={styles.cart}>
       <div className={styles.cartHeader}>
@@ -23,11 +22,11 @@ const Component = ({ removeModal, modalData, cartData }) => {
       <div className={styles.cartMain}>
         {cartData.map((data, index) =>
           <CartBox key={index} data={data} />)}
-          <div className={styles.priceWrapper}>
-            <h3>Subtotal:</h3>
-            <h3>${price}</h3>
-          </div>
       </div>
+      <div className={styles.priceWrapper}>
+          <h3>Subtotal</h3>
+          <h3>${price}</h3>
+        </div>
       <div className={styles.cartFooter}>
         <Link to='/cart' onClick={removeModal}>View Cart</Link>
       </div>

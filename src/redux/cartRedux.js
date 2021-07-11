@@ -49,16 +49,29 @@ export const reducer = (statePart = [], action = {}) => {
         if (data.id === action.payload.id) {
           data.quantity = action.payload.quantity;
           return data;
-        } else{
+        } else {
           return data;
         }
       })]
     }
     case ADD_TO_CART: {
-      return [...statePart, action.payload]
+      if (statePart.length > 0) {
+        let x = false;
+
+        statePart.map(data => {
+          if (data.color === action.payload.color && data.name === action.payload.name) {
+            x = true;
+            data.quantity += action.payload.quantity;
+            return data;
+          }
+        })
+        return x ? statePart : [...statePart, action.payload];
+      } else {
+        return [action.payload]
+      }
     }
     case REMOVE_FROM_CART: {
-      return [...statePart.filter(data=> data.id !== action.payload)]
+      return [...statePart.filter(data => data.id !== action.payload)]
     }
     case FETCH_START: {
       return {

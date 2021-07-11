@@ -25,21 +25,19 @@
   }
 
   .cartMain{
-    height: calc(100% - 167px);
+    height: calc(100% - 237px);
     overflow: auto;
-    position: relative;
-
-    .priceWrapper{
-      position: absolute;
-      left: 10px;
-      bottom: 10px;
-
-      h3{
-        margin: 10px 0;
-      }
-    }
   }
 
+  .priceWrapper{
+    height: 70px;
+
+    h3{
+      margin: 10px 0;
+      margin-left: 20px;
+    }
+  }
+  
   .cartFooter {
     position: absolute;
     bottom: 0;
