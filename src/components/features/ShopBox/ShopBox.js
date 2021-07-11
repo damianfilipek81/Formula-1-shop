@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { addToCart } from '../../../redux/cartRedux';
 import { addModal } from '../../../redux/modalRedux';
 import { connect } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 const Component = ({ image, name, price, customizable, _id, addModal, addToCart, color }) => {
   const [quantity, setQuantity] = useState(1);
@@ -18,7 +19,8 @@ const Component = ({ image, name, price, customizable, _id, addModal, addToCart,
       quantity,
       color,
       image,
-      customizable
+      customizable,
+      id: uuidv4()
     };
 
     addModal();
@@ -31,7 +33,7 @@ const Component = ({ image, name, price, customizable, _id, addModal, addToCart,
         {customizable ? <img src={`${PUBLIC_URL}${image}`} alt=''></img> : <img src={image} alt=''></img>}
         <div className={styles.slideInfo}>Quick view</div>
       </Link>
-      <h4>{name}</h4>
+      {customizable ? <h4>{`${color} ${name}`}</h4> : <h4>{name}</h4>}
       <h4>${price}</h4>
       <QuantityButton quantity={quantity} setQuantity={setQuantity} />
       <a className={styles.cartButton} onClick={() => handleAddToCart()}>Add to Cart</a>

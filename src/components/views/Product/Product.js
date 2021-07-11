@@ -14,6 +14,7 @@ import { Button } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import { PUBLIC_URL } from '../../../config';
 import Slider from "react-slick";
+import { v4 as uuidv4 } from 'uuid';
 
 const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
   useEffect(() => {
@@ -41,7 +42,8 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
       quantity,
       color,
       image: customizable ? images[color][0] : image,
-      customizable
+      customizable,
+      id: uuidv4()
     };
 
     addModal();
@@ -82,7 +84,7 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
           </p>
         </div>
         <div className={styles.rightWrapper}>
-          <h1>{name}</h1>
+        {customizable ? <h4>{`${color} ${name}`}</h4> : <h4>{name}</h4>}
           <h3>${price}</h3>
           <TextField
             label="Quantity"

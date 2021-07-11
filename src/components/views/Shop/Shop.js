@@ -5,6 +5,7 @@ import { fetchProducts, getAll } from '../../../redux/productsRedux';
 import styles from './Shop.module.scss';
 import { ShopBox } from '../../features/ShopBox/ShopBox';
 import { Container as ContainerWidth } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const Component = ({ products, fetchProducts }) => {
   useEffect(() => {
@@ -12,12 +13,15 @@ const Component = ({ products, fetchProducts }) => {
   }, []);
 
   return (
-    <div className={styles.root}>
-      <div className={styles.banner}>
-        <h1>DRIVE to SURVIVE</h1>
-      </div>
-      <h2 className={styles.subTitle}>- SHOP WITH US -</h2>
-      <ContainerWidth>
+    <ContainerWidth>
+      <div className={styles.root}>
+        <div className={styles.link}><Link to='/'>HOME</Link> / <span>Shop</span></div>
+
+        <div className={styles.banner}>
+          <h1>DRIVE to SURVIVE</h1>
+        </div>
+        <h2 className={styles.subTitle}>- SHOP WITH US -</h2>
+
         <div className={styles.products}>
           {products.map(data => {
             return data.customizable === false ? <ShopBox {...data} key={data._id} /> :
@@ -29,8 +33,8 @@ const Component = ({ products, fetchProducts }) => {
               )
           })}
         </div>
+      </div>
       </ContainerWidth>
-    </div>
   );
 };
 Component.propTypes = {

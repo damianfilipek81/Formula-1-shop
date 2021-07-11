@@ -17,7 +17,7 @@ const Component = ({ data }) => {
     setTimer(true);
   };
 
-  const { image, name, price, _id } = data;
+  const { image, category, price, _id } = data;
   return (
     <div className={styles.root}
       onMouseEnter={() => SetOnMouseEnter()}
@@ -29,7 +29,7 @@ const Component = ({ data }) => {
       {
         isShown === false && isTimer === false ?
           <div className={styles.textWrapper}>
-            <h3>{name}</h3>
+            <h3>{category}</h3>
             <h5>From {price}$</h5>
           </div> :
           <div className={styles.textWrapper}>

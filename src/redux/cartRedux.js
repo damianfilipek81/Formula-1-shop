@@ -12,11 +12,13 @@ const createActionName = name => `app/${reducerName}/${name}`;
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const ADD_TO_CART = createActionName('ADD_TO_CART');
+const CHANGE_QUANTITY = createActionName('CHANGE_QUANTITY');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const addToCart = payload => ({ payload, type: ADD_TO_CART });
+export const changeQuantity = payload => ({ payload, type: CHANGE_QUANTITY });
 
 /* thunk creators */
 // export const fetchCart = () => {
@@ -40,6 +42,16 @@ export const addToCart = payload => ({ payload, type: ADD_TO_CART });
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
+    case CHANGE_QUANTITY: {
+      return [...statePart.map(data => {
+        if (data.id === action.payload.id) {
+          data.quantity = action.payload.quantity;
+          return data;
+        } else{
+          return data;
+        }
+      })]
+    }
     case ADD_TO_CART: {
       return [...statePart, action.payload]
     }
