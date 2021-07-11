@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchOneProduct, getOneProduct } from '../../../redux/productsRedux';
 import { addToCart } from '../../../redux/cartRedux';
 import { addModal } from '../../../redux/modalRedux';
@@ -17,15 +17,17 @@ import Slider from "react-slick";
 import { v4 as uuidv4 } from 'uuid';
 
 const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
+  const [color, setColor] = React.useState('Black');
+  const location = useLocation();
   useEffect(() => {
     fetchOneProduct();
-  }, [fetchOneProduct]);
-
+    location.state !== undefined && setColor(location.state.color);
+  }, []);
+  
   const { price, name, images, customizable, image } = product;
   const [productDropdown, setProductDropdown] = React.useState(false);
   const [policyDropdown, setPolicyDropdown] = React.useState(false);
   const [quantity, setQuantity] = React.useState(1);
-  const [color, setColor] = React.useState('Black');
 
   const handleProductDropdownClick = () => {
     setProductDropdown(!productDropdown);
@@ -70,8 +72,8 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
         <div className={styles.link}><Link to='/'>HOME</Link> / <span>{name}</span></div>
         <div className={styles.leftWrapper}>
           <div className={styles.imageWrapper}>
-            {customizable ? <Slider {...settings} className={styles.slider}>
-              {name && images[color].map(data =>
+            {customizable && images ? <Slider {...settings} className={styles.slider}>
+              {images && images[color].map(data =>
                 <div className={styles.imageWrapper} key={data}>
                   <img src={`${PUBLIC_URL}${data}`} alt=''></img>
                 </div>
@@ -84,7 +86,7 @@ const Component = ({ product, fetchOneProduct, addToCart, addModal }) => {
           </p>
         </div>
         <div className={styles.rightWrapper}>
-        {customizable ? <h4>{`${color} ${name}`}</h4> : <h4>{name}</h4>}
+          {customizable ? <h4>{`${color} ${name}`}</h4> : <h4>{name}</h4>}
           <h3>${price}</h3>
           <TextField
             label="Quantity"

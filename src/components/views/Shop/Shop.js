@@ -16,12 +16,10 @@ const Component = ({ products, fetchProducts }) => {
     <ContainerWidth>
       <div className={styles.root}>
         <div className={styles.link}><Link to='/'>HOME</Link> / <span>Shop</span></div>
-
         <div className={styles.banner}>
           <h1>DRIVE to SURVIVE</h1>
         </div>
         <h2 className={styles.subTitle}>- SHOP WITH US -</h2>
-
         <div className={styles.products}>
           {products.map(data => {
             return data.customizable === false ? <ShopBox {...data} key={data._id} /> :

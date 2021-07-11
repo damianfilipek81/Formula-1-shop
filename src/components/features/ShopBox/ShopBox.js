@@ -29,7 +29,7 @@ const Component = ({ image, name, price, customizable, _id, addModal, addToCart,
 
   return (
     <div className={styles.root}>
-      <Link className={styles.imageWrapper} to={`/product/${_id}`}>
+      <Link className={styles.imageWrapper} to={{pathname: `/product/${_id}`, state: {color}}} >
         {customizable ? <img src={`${PUBLIC_URL}${image}`} alt=''></img> : <img src={image} alt=''></img>}
         <div className={styles.slideInfo}>Quick view</div>
       </Link>
