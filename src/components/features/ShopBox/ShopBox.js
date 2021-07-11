@@ -1,26 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './ShopBox.module.scss';
-import {PUBLIC_URL} from '../../../config';
+import { PUBLIC_URL } from '../../../config';
+import { QuantityButton } from '../../common/QuantityButton/QuantityButton';
+import { Link } from 'react-router-dom';
+import { addToCart } from '../../../redux/cartRedux';
+import { addModal } from '../../../redux/modalRedux';
+import { connect } from 'react-redux';
 
-const Component = ({ image, name, price, customizable }) => (
-  <div className={styles.root}>
-    <div className={styles.imageWrapper}>
-      {customizable ? <img src={`${PUBLIC_URL}${image}`} alt=''></img>:<img src={image} alt=''></img>}
+const Component = ({ image, name, price, customizable, _id, addModal, addToCart, color }) => {
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    const output = {
+      price,
+      name,
+      quantity,
+      color,
+      image,
+      customizable
+    };
+
+    addModal();
+    addToCart(output);
+  }
+
+  return (
+    <div className={styles.root}>
+      <Link className={styles.imageWrapper} to={`/product/${_id}`}>
+        {customizable ? <img src={`${PUBLIC_URL}${image}`} alt=''></img> : <img src={image} alt=''></img>}
+        <div className={styles.slideInfo}>Quick view</div>
+      </Link>
+      <h4>{name}</h4>
+      <h4>${price}</h4>
+      <QuantityButton quantity={quantity} setQuantity={setQuantity} />
+      <a className={styles.cartButton} onClick={() => handleAddToCart()}>Add to Cart</a>
     </div>
-    <h4>{name}</h4>
-    <h4>${price}</h4>
-  </div>
-);
-
+  );
+};
 Component.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
+  _id: PropTypes.string,
   price: PropTypes.number,
   customizable: PropTypes.bool,
+  addToCart: PropTypes.func,
+  addModal: PropTypes.func,
 };
 
+const mapDispatchToProps = (dispatch, props) => ({
+  addToCart: arg => dispatch(addToCart(arg)),
+  addModal: () => dispatch(addModal()),
+});
+
+const Container = connect(null, mapDispatchToProps)(Component);
+
+
 export {
-  Component as ShopBox,
+  Container as ShopBox,
   Component as ShopBoxComponent,
 };

@@ -16,11 +16,13 @@ const Component = ({ removeModal, modalData, cartData }) => {
         <span onClick={() => removeModal()}>{'>'}</span>
         <h2>Cart</h2>
       </div>
-      {cartData.map((data, index) =>
-        <CartBox key={index} data={data} />)}
-        <div className={styles.cartFooter}>
-          <Link to='/cart' onClick={removeModal}>View Cart</Link>
-        </div>
+      <div className={styles.cartMain}>
+        {cartData.map((data, index) =>
+          <CartBox key={index} data={data} />)}
+      </div>
+      <div className={styles.cartFooter}>
+        <Link to='/cart' onClick={removeModal}>View Cart</Link>
+      </div>
     </Drawer>
   );
 };

@@ -24,6 +24,11 @@
     }
   }
 
+  .cartMain{
+    height: calc(100% - 167px);
+    overflow: auto;
+  }
+
   .cartFooter {
     position: absolute;
     bottom: 0;
