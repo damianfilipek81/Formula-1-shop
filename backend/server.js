@@ -10,6 +10,7 @@ const passportConfig = require('./config/passport');
 const productsRoutes = require('./routes/products.routes');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const globalRoutes = require('./routes/global.routes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api', productsRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use(globalRoutes);
 
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {

@@ -20,9 +20,9 @@ const Component = ({ image, name, price, customizable, _id, addModal, addToCart,
       color,
       image,
       customizable,
-      id: uuidv4()
+      id: uuidv4(),
+      _id
     };
-
     addModal();
     addToCart(output);
   }

@@ -28,4 +28,5 @@ router.get('/logged', isLogged, (req, res) => {
 
 });
 
+
 module.exports = router;
